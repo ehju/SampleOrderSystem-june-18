@@ -138,4 +138,16 @@ std::optional<Order> OrderRepository::FindById(int orderId) const
     return std::nullopt;
 }
 
+void OrderRepository::UpdateStatus(int orderId, OrderStatus status)
+{
+    for (Order& order : orders_) {
+        if (order.GetOrderId() == orderId) {
+            order.SetStatus(status);
+            SaveToJsonFile();
+            return;
+        }
+    }
+    throw std::invalid_argument("존재하지 않는 주문입니다.");
+}
+
 }  // namespace order_system

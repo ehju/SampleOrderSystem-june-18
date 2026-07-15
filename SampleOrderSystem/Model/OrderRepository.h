@@ -28,6 +28,9 @@ public:
 
     // orderId 로 단건 조회한다. 존재하지 않으면 std::nullopt 를 반환한다.
     virtual std::optional<Order> FindById(int orderId) const = 0;
+
+    // orderId 에 해당하는 Order 의 상태를 status 로 변경한다.
+    virtual void UpdateStatus(int orderId, OrderStatus status) = 0;
 };
 
 // JSON 파일 기반으로 Order 를 영속화하는 Repository 구현체.
@@ -41,6 +44,7 @@ public:
     std::vector<Order> GetAll() const override;
     std::vector<Order> FindByStatus(OrderStatus status) const override;
     std::optional<Order> FindById(int orderId) const override;
+    void UpdateStatus(int orderId, OrderStatus status) override;
 
 private:
     // jsonFilePath_ 가 존재하면 그 내용을 읽어 orders_/nextOrderId_ 를 구성한다.

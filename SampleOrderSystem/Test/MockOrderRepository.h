@@ -13,6 +13,7 @@ public:
     MOCK_METHOD(std::vector<Order>, GetAll, (), (const, override));
     MOCK_METHOD(std::vector<Order>, FindByStatus, (OrderStatus status), (const, override));
     MOCK_METHOD(std::optional<Order>, FindById, (int orderId), (const, override));
+    MOCK_METHOD(void, UpdateStatus, (int orderId, OrderStatus status), (override));
 };
 
 }  // namespace order_system
