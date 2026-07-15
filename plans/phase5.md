@@ -4,6 +4,7 @@
 > 코딩 컨벤션: [dev/coding-convention.md](../dev/coding-convention.md)
 > 이 문서는 자기완결적이다. 다른 phase 파일이나 PLAN.md를 참조하지 않고 이 문서만으로 작업한다.
 > 전제: Phase 4 에서 재고 부족 승인 시 `ProductionJob` 을 생성해 생산 큐에 삽입하는 지점까지 구현되어 있다. `ProductionJob` 타입은 Phase 1 에서 구현되어 있다.
+> 병렬 진행: 이 phase 는 Phase 6(모니터링)/Phase 7(출고 처리) 와 동시에 진행 가능하다. 서로 다른 파일을 다루고 상호 의존이 없으므로, 세 phase 의 교차 검증(예: 생산 완료 후 모니터링 반영)은 Phase 8에서 수행한다.
 
 ## 목표
 
