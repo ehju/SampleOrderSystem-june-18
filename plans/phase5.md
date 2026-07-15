@@ -20,6 +20,7 @@
 - FIFO 큐. `std::queue<ProductionJob>` 등으로 래핑.
 - `enqueuedAt` 오름차순으로 처리 순서를 보장한다 (큐 삽입 순서 자체가 FIFO이므로, 삽입 시점 기록만 정확하면 별도 정렬 로직은 불필요).
 - 인터페이스: 삽입(enqueue), 선두 확인/제거(peek/dequeue), 비어있는지 확인, 전체 목록 조회(대기 큐 뷰 출력용).
+- **영속화 범위**: `ProductionQueue` 는 JSON 파일로 영속화하지 않는다 (인메모리 상태로만 유지). `SampleRepository`/`OrderRepository`(Phase 2/3)와 달리 이 phase 의 큐는 프로그램 종료 시 사라져도 무방한 런타임 작업 상태로 취급한다.
 
 ### 3. 생산 현황 표기 뷰
 

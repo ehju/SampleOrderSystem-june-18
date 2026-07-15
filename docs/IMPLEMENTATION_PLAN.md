@@ -54,14 +54,16 @@
 **목표**: 시료 등록/조회/검색 기능 완성 (End-to-End 콘솔 동작)
 
 - `SampleRepository` 구현 (등록, 전체 조회, 이름 부분검색, ID 조회, 재고 갱신 인터페이스)
+  - PRD 4절("자료구조는 Json을 사용한다")에 따라 **JSON 파일 영속화**를 적용한다. Repository는 시작 시 JSON 파일에서 데이터를 로드하고, 변경(등록/재고 갱신) 시 JSON 파일에 반영한다.
 - `SampleController` 구현: 입력 검증(빈 이름, 중복 이름, yield/시간 범위) 후 Repository 위임
 - `SampleView` 구현: 등록 입력폼, 목록/검색 결과 출력
-- 단위 테스트: Repository 등록/중복거부/검색, Controller 검증 로직
-- 콘솔에서 등록 → 조회 → 검색 흐름 수동 검증
+- 단위 테스트: Repository 등록/중복거부/검색/JSON 저장·로드 라운드트립, Controller 검증 로직
+- 콘솔에서 등록 → 조회 → 검색 흐름 수동 검증 (재시작 후 데이터 유지 확인 포함)
 
 **완료 기준**
 - [ ] 시료 등록/조회/검색 3개 시나리오가 콘솔에서 정상 동작
 - [ ] 이름 중복, 잘못된 yield/시간 값에 대한 거부 테스트 통과
+- [ ] 등록/재고 변경 내용이 JSON 파일에 반영되고, 재시작 후에도 로드됨을 확인
 
 ---
 
@@ -72,9 +74,10 @@
 **목표**: 고객 주문을 `RESERVED` 상태로 접수하는 기능 완성
 
 - `OrderRepository` 구현 (생성, 전체/상태별 조회, ID 조회)
+  - `SampleRepository` 와 동일하게 **JSON 파일 영속화**를 적용한다 (시작 시 로드, 변경 시 저장).
 - `OrderController` 예약 유스케이스 구현: `sampleId` 존재 검증 → `Order` 생성
 - `OrderReservationView` 구현: 입력폼, 접수 결과 출력
-- 단위 테스트: 존재하지 않는 시료 거부, 수량 1 미만 거부, 정상 접수 시 상태 `RESERVED` 확인
+- 단위 테스트: 존재하지 않는 시료 거부, 수량 1 미만 거부, 정상 접수 시 상태 `RESERVED` 확인, JSON 저장·로드 라운드트립
 
 **완료 기준**
 - [ ] 등록된 시료에 대해서만 주문 접수 가능함을 확인
@@ -212,3 +215,4 @@ Phase 0 (기초 설정)
 | 생산 완료 트리거 방식 (수동/모의/실시간) | Phase 5 | [specs/05-production-line.md](specs/05-production-line.md) |
 | sampleId 자동 채번 여부 | Phase 2 | [specs/02-sample-management.md](specs/02-sample-management.md) |
 | 재고 부족 시 기존 재고 활용 및 동시성(이중 배정 방지) 정책 | Phase 4 | [specs/04-order-approval.md](specs/04-order-approval.md) |
+| JSON 파일 저장 경로/스키마, 저장 시점(변경 즉시 vs 종료 시) | Phase 2 | PRD 4절 (자료구조는 Json 사용, 파일 영속화로 확정) |

@@ -18,6 +18,10 @@
 - 상태별 조회 (예: `RESERVED` 목록 — Phase 4에서 사용 예정이지만 인터페이스는 이 phase 에서 마련).
 - ID 조회.
 
+**JSON 파일 영속화 (PRD 4절)**
+- `SampleRepository`(Phase 2)와 동일한 정책을 따른다: 시작 시 JSON 파일에서 로드, 변경(생성 및 이후 phase 의 상태 변경) 시 즉시 JSON 파일에 반영.
+- 파일 경로/이름은 `SampleRepository` 와 별도 파일로 관리한다 (예: `Data/orders.json`).
+
 ### 2. `OrderController` 예약 유스케이스
 
 **입력 값**
@@ -52,9 +56,11 @@
 - `OrderRepository`
   - 정상 생성 시 `orderId` 자동 채번, `status = RESERVED` 확인.
   - 상태별 조회 시 `RESERVED` 주문만 반환됨을 확인 (다른 상태 주문이 섞여 있는 상황을 가정한 테스트 데이터로 검증).
+  - JSON 파일 영속화: 주문 생성 후 JSON 파일에 반영되는지 확인. 기존 JSON 파일이 있는 상태로 Repository 를 생성하면 그 데이터가 로드됨을 확인.
 
 ## 완료 기준 (Definition of Done)
 
 - [ ] 등록된 시료에 대해서만 주문 접수가 가능함을 테스트로 확인한다.
 - [ ] 접수된 주문이 `OrderRepository` 의 상태별 조회에서 `RESERVED` 로 집계됨을 테스트로 확인한다.
 - [ ] 콘솔에서 주문 접수 시나리오가 정상 동작한다.
+- [ ] 주문 생성이 JSON 파일에 반영되고, Repository 재생성 후에도 데이터가 유지됨을 테스트로 확인한다.
