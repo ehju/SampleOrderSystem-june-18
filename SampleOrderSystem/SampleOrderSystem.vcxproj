@@ -266,16 +266,18 @@
     </ClCompile>
 
     <ClCompile Include="Test\ShipmentControllerTest.cpp">
-
+      <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Test\MonitoringControllerTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Test\MonitoringViewTest.cpp">
-      <ClCompile Include="Test\ProductionQueueTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Test\ProductionQueueTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Test\ProductionControllerTest.cpp">
-
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
