@@ -4,6 +4,13 @@
     "name": "¿Á½ÃÀü",
     "avgProductionTime": 1,
     "yield": 0.5,
+    "stockQuantity": 18
+  },
+  {
+    "sampleId": 2,
+    "name": "ÀÚ",
+    "avgProductionTime": 10,
+    "yield": 0.5,
     "stockQuantity": 0
   }
 ]
