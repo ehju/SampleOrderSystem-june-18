@@ -3,13 +3,13 @@
     SampleOrderSystem 솔루션을 빌드하고, 빌드된 실행 파일(gtest/gmock 러너)을 실행해 테스트 결과를 반환한다.
 
 .PARAMETER Configuration
-    빌드 구성 (기본값: Debug)
+    빌드 구성 (기본값: Test — gtest/gmock 러너가 빌드되는 구성)
 
 .PARAMETER Platform
     빌드 플랫폼 (기본값: x64)
 #>
 param(
-    [string]$Configuration = "Debug",
+    [string]$Configuration = "Test",
     [string]$Platform = "x64"
 )
 
@@ -84,7 +84,7 @@ function Run-Tests {
     param([string]$ExePath)
 
     Write-Host "테스트 실행: $ExePath" -ForegroundColor Cyan
-    & $ExePath
+    & $ExePath | Out-Host
     return $LASTEXITCODE
 }
 

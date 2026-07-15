@@ -2,6 +2,9 @@
   <Configurations>
     <Platform Name="x64" />
     <Platform Name="x86" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <BuildType Name="Test" />
   </Configurations>
   <Project Path="SampleOrderSystem/SampleOrderSystem.vcxproj" Id="52ca7503-a790-4b62-9796-07ce1556adc2" />
 </Solution>
