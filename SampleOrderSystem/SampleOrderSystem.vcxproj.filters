@@ -108,6 +108,12 @@
     <ClCompile Include="Controller\MainMenuController.cpp">
       <Filter>Controller</Filter>
     </ClCompile>
+    <ClCompile Include="Test\MainMenuControllerTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\IntegrationScenarioTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model\Model.h">
