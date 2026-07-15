@@ -223,6 +223,9 @@
     <ClCompile Include="Controller\SampleController.cpp" />
     <ClCompile Include="Controller\OrderController.cpp" />
 
+    <ClCompile Include="Controller\ShipmentController.cpp" />
+
+
     <ClCompile Include="Controller\MonitoringController.cpp" />
 
     <ClCompile Include="Controller\ProductionController.cpp" />
@@ -261,6 +264,9 @@
     <ClCompile Include="Test\OrderControllerTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
+
+    <ClCompile Include="Test\ShipmentControllerTest.cpp">
+
     <ClCompile Include="Test\MonitoringControllerTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
@@ -269,6 +275,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Test\ProductionControllerTest.cpp">
+
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
@@ -288,8 +295,12 @@
     <ClInclude Include="Controller\Controller.h" />
     <ClInclude Include="Controller\SampleController.h" />
     <ClInclude Include="Controller\OrderController.h" />
+
+    <ClInclude Include="Controller\ShipmentController.h" />
+
     <ClInclude Include="Controller\MonitoringController.h" />
     <ClInclude Include="Controller\ProductionController.h" />
+
     <ClInclude Include="Test\MockSampleRepository.h" />
     <ClInclude Include="Test\MockOrderRepository.h" />
   </ItemGroup>
