@@ -208,6 +208,11 @@
     <ClCompile Include="Model\Sample.cpp" />
     <ClCompile Include="Model\Order.cpp" />
     <ClCompile Include="Model\ProductionJob.cpp" />
+    <ClCompile Include="Model\Model.cpp" />
+    <!-- View 계층 구현 -->
+    <ClCompile Include="View\View.cpp" />
+    <!-- Controller 계층 구현 -->
+    <ClCompile Include="Controller\Controller.cpp" />
     <!-- 테스트 코드: Test 구성에서만 빌드에 포함한다. -->
     <ClCompile Include="Test\TestMain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
@@ -233,6 +238,9 @@
     <ClInclude Include="Model\Sample.h" />
     <ClInclude Include="Model\Order.h" />
     <ClInclude Include="Model\ProductionJob.h" />
+    <ClInclude Include="Model\Model.h" />
+    <ClInclude Include="View\View.h" />
+    <ClInclude Include="Controller\Controller.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

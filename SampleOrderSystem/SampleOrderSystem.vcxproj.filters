@@ -16,6 +16,15 @@
     <Filter Include="Test">
       <UniqueIdentifier>{5A2F1A0E-3B6C-4B1D-9E9C-1B5C0E7B2C11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{7B1A2C3D-4E5F-4A6B-8C9D-0E1F2A3B4C5D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View">
+      <UniqueIdentifier>{8C2B3D4E-5F60-4B7C-9D0E-1F2A3B4C5D6E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controller">
+      <UniqueIdentifier>{9D3C4E5F-6071-4C8D-0E1F-2A3B4C5D6E7F}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -23,6 +32,15 @@
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\Model.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="View\View.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller\Controller.cpp">
+      <Filter>Controller</Filter>
     </ClCompile>
     <ClCompile Include="Test\TestMain.cpp">
       <Filter>Test</Filter>
@@ -42,5 +60,16 @@
     <ClCompile Include="Test\ProductionJobTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Model\Model.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="View\View.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\Controller.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
