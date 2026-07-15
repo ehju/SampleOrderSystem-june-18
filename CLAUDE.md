@@ -13,6 +13,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 코드를 작성하거나 수정할 때는 [dev/coding-convention.md](dev/coding-convention.md)에 정의된 코딩 컨벤션을 따른다.
 
+## PoC 참조 규칙
+
+`poc/` 폴더가 존재한다고 해서 자동으로 참조하지 않는다. 사용자가 특정 PoC 코드를 참조하라고 명시적으로 지시한 경우에만 해당 PoC를 확인하고 참조한다.
+PoC는 동작/구조에 대한 참고 자료일 뿐이며, 그대로 복사하지 않고 [dev/coding-convention.md](dev/coding-convention.md)의 네이밍/서식/구조 규칙에 맞게 재작성한다.
+PoC와 실제 요구사항(docs 폴더의 스펙)이 상충하면 요구사항을 우선한다.
+
 ## tdd-workflow 실행 규칙
 
 `.claude/workflows/tdd-workflow.js`는 `args.step`으로 지정된 단계(plan/red/green/refactor) 하나만 실행하고 즉시 반환한다. 단계를 이어서 자동 실행하지 않는다.
