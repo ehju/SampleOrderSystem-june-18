@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cmath>
+#include <stdexcept>
 
 namespace order_system {
 
@@ -44,6 +45,11 @@ std::vector<Order> OrderController::GetReservedOrders() const
         return lhs.GetCreatedAt() < rhs.GetCreatedAt();
     });
     return reservedOrders;
+}
+
+std::vector<Order> OrderController::GetAllOrders() const
+{
+    return orderRepository_.GetAll();
 }
 
 OrderApprovalResult OrderController::ApproveOrder(int orderId)
@@ -88,6 +94,17 @@ OrderApprovalResult OrderController::RejectOrder(int orderId)
 const std::queue<ProductionJob>& OrderController::GetProductionQueue() const
 {
     return productionQueue_;
+}
+
+ProductionJob OrderController::PopProductionJob()
+{
+    if (productionQueue_.empty()) {
+        throw std::out_of_range("생산 큐가 비어 있습니다");
+    }
+
+    ProductionJob job = productionQueue_.front();
+    productionQueue_.pop();
+    return job;
 }
 
 }  // namespace order_system

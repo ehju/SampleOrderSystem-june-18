@@ -17,6 +17,11 @@ struct SampleRegistrationInput {
 // SampleView: 시료 등록/조회/검색과 관련된 화면 출력과 입력 수신만 담당한다.
 class SampleView {
 public:
+    void ShowMenu() const;
+
+    // 메뉴 선택 값을 입력받는다. 숫자가 아니면 -1을 반환한다.
+    int ReadMenuChoice() const;
+
     // 이름/평균 생산시간/수율을 순서대로 입력받는다.
     SampleRegistrationInput ReadSampleRegistrationInput() const;
 

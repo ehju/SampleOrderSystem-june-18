@@ -93,6 +93,21 @@
     <ClCompile Include="Test\MonitoringViewTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="View\OrderView.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="View\ProductionView.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="View\ShipmentView.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="View\MainMenuView.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller\MainMenuController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model\Model.h">
@@ -130,6 +145,21 @@
     </ClInclude>
     <ClInclude Include="View\MonitoringView.h">
       <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="View\OrderView.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="View\ProductionView.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="View\ShipmentView.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="View\MainMenuView.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\MainMenuController.h">
+      <Filter>Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

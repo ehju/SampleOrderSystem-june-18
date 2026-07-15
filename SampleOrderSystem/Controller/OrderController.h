@@ -39,6 +39,9 @@ public:
     // RESERVED 상태의 주문을 접수 순서(createdAt 오름차순, FIFO) 로 정렬하여 반환한다.
     std::vector<Order> GetReservedOrders() const;
 
+    // 생성된 모든 Order 목록을 반환한다.
+    std::vector<Order> GetAllOrders() const;
+
     // 대상 주문이 RESERVED 상태인지 확인한 뒤, 재고 판정 결과에 따라 CONFIRMED 또는 PRODUCING 으로 전환한다.
     // 재고가 부족하면 ProductionJob 을 생성해 생산 큐(FIFO) 맨 뒤에 추가한다.
     // 정책 B(출고 시 차감)에 따라 이 처리에서는 재고를 차감하지 않는다.
@@ -49,6 +52,10 @@ public:
 
     // 승인 처리 중 생성된 ProductionJob 이 쌓이는 생산 큐(FIFO). 실제 소비 로직은 Phase 5 가 담당한다.
     const std::queue<ProductionJob>& GetProductionQueue() const;
+
+    // 큐 선두의 ProductionJob 을 꺼내 반환한다. Phase 8 통합 시 공유 ProductionQueue(Model)로 이관하는 용도로 사용한다.
+    // 큐가 비어 있으면 std::out_of_range 를 던진다.
+    ProductionJob PopProductionJob();
 
 private:
     ISampleRepository& sampleRepository_;

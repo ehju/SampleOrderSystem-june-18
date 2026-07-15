@@ -1,6 +1,7 @@
 ﻿#include "MonitoringView.h"
 
 #include <iostream>
+#include <limits>
 
 namespace order_system {
 
@@ -20,6 +21,27 @@ std::string ToDisplayText(StockStatus status)
 }
 
 }  // namespace
+
+void MonitoringView::ShowMenu() const
+{
+    std::cout << "\n[모니터링 메뉴]\n"
+               << " 1. 주문 현황 조회\n"
+               << " 2. 재고 현황 조회\n"
+               << " 0. 이전 메뉴로\n"
+               << "선택 > ";
+}
+
+int MonitoringView::ReadMenuChoice() const
+{
+    int choice = 0;
+    std::cin >> choice;
+    if (std::cin.fail()) {
+        std::cin.clear();
+        choice = -1;
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return choice;
+}
 
 void MonitoringView::ShowOrderStatus(const OrderStatusCounts& counts) const
 {
@@ -43,6 +65,11 @@ void MonitoringView::ShowStockStatus(const std::vector<SampleStockStatusRow>& ro
         std::cout << "    " << row.sampleId << "     | " << row.name << "   |      " << row.stockQuantity
                    << "       |     " << row.pendingQuantity << "     | " << ToDisplayText(row.status) << "\n";
     }
+}
+
+void MonitoringView::ShowMessage(const std::string& message) const
+{
+    std::cout << message << "\n";
 }
 
 }  // namespace order_system

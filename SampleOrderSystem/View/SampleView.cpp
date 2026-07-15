@@ -1,6 +1,7 @@
 ﻿#include "SampleView.h"
 
 #include <iostream>
+#include <limits>
 
 namespace order_system {
 
@@ -15,6 +16,28 @@ void PrintSampleTable(const std::vector<Sample>& samples)
 }
 
 }  // namespace
+
+void SampleView::ShowMenu() const
+{
+    std::cout << "\n[시료 관리 메뉴]\n"
+               << " 1. 시료 등록\n"
+               << " 2. 시료 전체 조회\n"
+               << " 3. 시료 검색\n"
+               << " 0. 이전 메뉴로\n"
+               << "선택 > ";
+}
+
+int SampleView::ReadMenuChoice() const
+{
+    int choice = 0;
+    std::cin >> choice;
+    if (std::cin.fail()) {
+        std::cin.clear();
+        choice = -1;
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return choice;
+}
 
 SampleRegistrationInput SampleView::ReadSampleRegistrationInput() const
 {
