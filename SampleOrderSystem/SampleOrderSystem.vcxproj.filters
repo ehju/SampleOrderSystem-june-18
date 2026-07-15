@@ -60,16 +60,37 @@
     <ClCompile Include="Test\ProductionJobTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Test\SampleRepositoryTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\SampleControllerTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\SampleViewTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model\Model.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Model\SampleRepository.h">
+      <Filter>Model</Filter>
+    </ClInclude>
     <ClInclude Include="View\View.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="View\SampleView.h">
       <Filter>View</Filter>
     </ClInclude>
     <ClInclude Include="Controller\Controller.h">
       <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\SampleController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\MockSampleRepository.h">
+      <Filter>Test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
