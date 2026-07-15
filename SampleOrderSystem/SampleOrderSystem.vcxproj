@@ -220,6 +220,7 @@
     <ClCompile Include="Controller\Controller.cpp" />
     <ClCompile Include="Controller\SampleController.cpp" />
     <ClCompile Include="Controller\OrderController.cpp" />
+    <ClCompile Include="Controller\ShipmentController.cpp" />
     <!-- 테스트 코드: Test 구성에서만 빌드에 포함한다. -->
     <ClCompile Include="Test\TestMain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
@@ -254,6 +255,9 @@
     <ClCompile Include="Test\OrderControllerTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Test\ShipmentControllerTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lib\Json.h" />
@@ -269,6 +273,7 @@
     <ClInclude Include="Controller\Controller.h" />
     <ClInclude Include="Controller\SampleController.h" />
     <ClInclude Include="Controller\OrderController.h" />
+    <ClInclude Include="Controller\ShipmentController.h" />
     <ClInclude Include="Test\MockSampleRepository.h" />
     <ClInclude Include="Test\MockOrderRepository.h" />
   </ItemGroup>
