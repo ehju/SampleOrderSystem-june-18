@@ -21,6 +21,9 @@ public:
     OrderStatus GetStatus() const;
     const std::chrono::system_clock::time_point& GetCreatedAt() const;
 
+    // 주문 상태를 변경한다. Repository 계층에서 상태 전이/영속화 복원 시 사용한다.
+    void SetStatus(OrderStatus status);
+
 private:
     int orderId_;
     int sampleId_;

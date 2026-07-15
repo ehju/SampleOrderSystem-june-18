@@ -43,4 +43,9 @@ const std::chrono::system_clock::time_point& Order::GetCreatedAt() const
     return createdAt_;
 }
 
+void Order::SetStatus(OrderStatus status)
+{
+    status_ = status;
+}
+
 }  // namespace order_system

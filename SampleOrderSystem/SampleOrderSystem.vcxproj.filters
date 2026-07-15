@@ -69,6 +69,18 @@
     <ClCompile Include="Test\SampleViewTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Model\OrderRepository.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller\OrderController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\OrderRepositoryTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\OrderControllerTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model\Model.h">
@@ -90,6 +102,15 @@
       <Filter>Controller</Filter>
     </ClInclude>
     <ClInclude Include="Test\MockSampleRepository.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\OrderRepository.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\OrderController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\MockOrderRepository.h">
       <Filter>Test</Filter>
     </ClInclude>
   </ItemGroup>

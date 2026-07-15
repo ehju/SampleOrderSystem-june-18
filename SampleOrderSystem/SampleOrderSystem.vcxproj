@@ -212,12 +212,14 @@
     <ClCompile Include="Model\ProductionJob.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\SampleRepository.cpp" />
+    <ClCompile Include="Model\OrderRepository.cpp" />
     <!-- View 계층 구현 -->
     <ClCompile Include="View\View.cpp" />
     <ClCompile Include="View\SampleView.cpp" />
     <!-- Controller 계층 구현 -->
     <ClCompile Include="Controller\Controller.cpp" />
     <ClCompile Include="Controller\SampleController.cpp" />
+    <ClCompile Include="Controller\OrderController.cpp" />
     <!-- 테스트 코드: Test 구성에서만 빌드에 포함한다. -->
     <ClCompile Include="Test\TestMain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
@@ -246,6 +248,12 @@
     <ClCompile Include="Test\SampleViewTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Test\OrderRepositoryTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Test\OrderControllerTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)'!='Test'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lib\Json.h" />
@@ -255,11 +263,14 @@
     <ClInclude Include="Model\ProductionJob.h" />
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Model\SampleRepository.h" />
+    <ClInclude Include="Model\OrderRepository.h" />
     <ClInclude Include="View\View.h" />
     <ClInclude Include="View\SampleView.h" />
     <ClInclude Include="Controller\Controller.h" />
     <ClInclude Include="Controller\SampleController.h" />
+    <ClInclude Include="Controller\OrderController.h" />
     <ClInclude Include="Test\MockSampleRepository.h" />
+    <ClInclude Include="Test\MockOrderRepository.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
