@@ -1,7 +1,7 @@
 # Phase 9 — 테스트 보강 및 최종 QA
 
 > 참조 명세 원문: `docs/specs/` 전체 (00-domain-model.md ~ 07-shipment.md), `docs/PRD.md`
-> 코딩 컨벤션: [dev/coding-convention.md](dev/coding-convention.md)
+> 코딩 컨벤션: [dev/coding-convention.md](../dev/coding-convention.md)
 > 이 문서는 자기완결적이다. 다른 phase 파일이나 PLAN.md를 참조하지 않고 이 문서만으로 작업한다.
 > 전제: Phase 0~8 이 모두 완료되어 전체 기능(시료 관리/주문 접수/승인·거절/생산 라인/모니터링/출고 처리/메인 메뉴)이 동작한다.
 
@@ -25,13 +25,13 @@ Phase 8의 전체 시나리오를 자동화된 테스트로 전환 가능한 범
 
 | 기능 | 명세 문서 | 점검할 엣지 케이스 |
 |---|---|---|
-| 시료 관리 | [docs/specs/02-sample-management.md](docs/specs/02-sample-management.md) | 이름 중복, yield 범위, avgProductionTime 범위, 검색 결과 없음 |
-| 주문 접수 | [docs/specs/03-order-reservation.md](docs/specs/03-order-reservation.md) | 존재하지 않는 sampleId, quantity < 1, 빈 customerName |
-| 주문 승인/거절 | [docs/specs/04-order-approval.md](docs/specs/04-order-approval.md) | 재고 충분/부족 분기, ceil 경계값, 이미 처리된 주문 재처리 |
-| 생산 라인 | [docs/specs/05-production-line.md](docs/specs/05-production-line.md) | FIFO 순서, 빈 큐 완료 처리 시도 |
-| 모니터링 | [docs/specs/06-monitoring.md](docs/specs/06-monitoring.md) | 재고==대기수량 경계, 재고==0/대기수량==0 |
-| 출고 처리 | [docs/specs/07-shipment.md](docs/specs/07-shipment.md) | CONFIRMED 아닌 주문 출고 시도, 재출고 시도 |
-| 메인 메뉴 | [docs/specs/01-main-menu.md](docs/specs/01-main-menu.md) | 숫자 외 입력, 범위 밖 메뉴, 초기 상태(시료 0건) |
+| 시료 관리 | [docs/specs/02-sample-management.md](../docs/specs/02-sample-management.md) | 이름 중복, yield 범위, avgProductionTime 범위, 검색 결과 없음 |
+| 주문 접수 | [docs/specs/03-order-reservation.md](../docs/specs/03-order-reservation.md) | 존재하지 않는 sampleId, quantity < 1, 빈 customerName |
+| 주문 승인/거절 | [docs/specs/04-order-approval.md](../docs/specs/04-order-approval.md) | 재고 충분/부족 분기, ceil 경계값, 이미 처리된 주문 재처리 |
+| 생산 라인 | [docs/specs/05-production-line.md](../docs/specs/05-production-line.md) | FIFO 순서, 빈 큐 완료 처리 시도 |
+| 모니터링 | [docs/specs/06-monitoring.md](../docs/specs/06-monitoring.md) | 재고==대기수량 경계, 재고==0/대기수량==0 |
+| 출고 처리 | [docs/specs/07-shipment.md](../docs/specs/07-shipment.md) | CONFIRMED 아닌 주문 출고 시도, 재출고 시도 |
+| 메인 메뉴 | [docs/specs/01-main-menu.md](../docs/specs/01-main-menu.md) | 숫자 외 입력, 범위 밖 메뉴, 초기 상태(시료 0건) |
 
 ### 3. 정책 문서 최종 검토
 

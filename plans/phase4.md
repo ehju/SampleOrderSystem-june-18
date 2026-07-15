@@ -1,7 +1,7 @@
 # Phase 4 — 주문 승인/거절 기능 (재고 판정 & 정책 확정)
 
-> 참조 명세 원문: [docs/specs/04-order-approval.md](docs/specs/04-order-approval.md), [docs/specs/07-shipment.md](docs/specs/07-shipment.md) 2.3절(재고 차감 시점), [docs/specs/00-domain-model.md](docs/specs/00-domain-model.md)
-> 코딩 컨벤션: [dev/coding-convention.md](dev/coding-convention.md)
+> 참조 명세 원문: [docs/specs/04-order-approval.md](../docs/specs/04-order-approval.md), [docs/specs/07-shipment.md](../docs/specs/07-shipment.md) 2.3절(재고 차감 시점), [docs/specs/00-domain-model.md](../docs/specs/00-domain-model.md)
+> 코딩 컨벤션: [dev/coding-convention.md](../dev/coding-convention.md)
 > 이 문서는 자기완결적이다. 다른 phase 파일이나 PLAN.md를 참조하지 않고 이 문서만으로 작업한다.
 > 전제: Phase 3 에서 `OrderRepository`(생성/상태별 조회) 가, Phase 2 에서 `SampleRepository` 가 이미 구현되어 있다.
 

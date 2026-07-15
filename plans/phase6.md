@@ -1,7 +1,7 @@
 # Phase 6 — 모니터링 기능
 
-> 참조 명세 원문: [docs/specs/06-monitoring.md](docs/specs/06-monitoring.md), [docs/specs/00-domain-model.md](docs/specs/00-domain-model.md) 4절(파생 값)
-> 코딩 컨벤션: [dev/coding-convention.md](dev/coding-convention.md)
+> 참조 명세 원문: [docs/specs/06-monitoring.md](../docs/specs/06-monitoring.md), [docs/specs/00-domain-model.md](../docs/specs/00-domain-model.md) 4절(파생 값)
+> 코딩 컨벤션: [dev/coding-convention.md](../dev/coding-convention.md)
 > 이 문서는 자기완결적이다. 다른 phase 파일이나 PLAN.md를 참조하지 않고 이 문서만으로 작업한다.
 > 전제: Phase 2~5 에서 `SampleRepository`, `OrderRepository` (생성/조회) 가 구현되어 있다. 별도의 캐시 없이 항상 Repository 를 조회하여 실시간 계산한다.
 

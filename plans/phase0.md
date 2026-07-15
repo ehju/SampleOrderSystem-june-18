@@ -1,6 +1,6 @@
 # Phase 0 — 프로젝트 기초 설정
 
-> 코딩 컨벤션: [dev/coding-convention.md](dev/coding-convention.md) (C++20, MVC, GoogleTest/GoogleMock)
+> 코딩 컨벤션: [dev/coding-convention.md](../dev/coding-convention.md) (C++20, MVC, GoogleTest/GoogleMock)
 > 이 문서는 자기완결적이다. 다른 phase 파일이나 PLAN.md를 참조하지 않고 이 문서만으로 작업한다.
 
 ## 목표

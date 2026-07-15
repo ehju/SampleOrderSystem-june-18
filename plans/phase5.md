@@ -1,7 +1,7 @@
 # Phase 5 — 생산 라인 기능 (FIFO 큐 & 생산 완료 처리)
 
-> 참조 명세 원문: [docs/specs/05-production-line.md](docs/specs/05-production-line.md), [docs/specs/00-domain-model.md](docs/specs/00-domain-model.md)
-> 코딩 컨벤션: [dev/coding-convention.md](dev/coding-convention.md)
+> 참조 명세 원문: [docs/specs/05-production-line.md](../docs/specs/05-production-line.md), [docs/specs/00-domain-model.md](../docs/specs/00-domain-model.md)
+> 코딩 컨벤션: [dev/coding-convention.md](../dev/coding-convention.md)
 > 이 문서는 자기완결적이다. 다른 phase 파일이나 PLAN.md를 참조하지 않고 이 문서만으로 작업한다.
 > 전제: Phase 4 에서 재고 부족 승인 시 `ProductionJob` 을 생성해 생산 큐에 삽입하는 지점까지 구현되어 있다. `ProductionJob` 타입은 Phase 1 에서 구현되어 있다.
 

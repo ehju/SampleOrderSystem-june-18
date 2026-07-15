@@ -1,7 +1,7 @@
 # Phase 8 — 메인 메뉴 통합 & 콘솔 UX 마감
 
-> 참조 명세 원문: [docs/specs/01-main-menu.md](docs/specs/01-main-menu.md)
-> 코딩 컨벤션: [dev/coding-convention.md](dev/coding-convention.md)
+> 참조 명세 원문: [docs/specs/01-main-menu.md](../docs/specs/01-main-menu.md)
+> 코딩 컨벤션: [dev/coding-convention.md](../dev/coding-convention.md)
 > 이 문서는 자기완결적이다. 다른 phase 파일이나 PLAN.md를 참조하지 않고 이 문서만으로 작업한다.
 > 전제: Phase 2~7 에서 시료 관리/주문 접수/승인·거절/생산 라인/모니터링/출고 처리 기능이 모두 구현되어 있다.
 

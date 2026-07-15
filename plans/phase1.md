@@ -1,7 +1,7 @@
 # Phase 1 — 도메인 모델 구현 (Model 계층 기초)
 
-> 참조 명세 원문: [docs/specs/00-domain-model.md](docs/specs/00-domain-model.md)
-> 코딩 컨벤션: [dev/coding-convention.md](dev/coding-convention.md)
+> 참조 명세 원문: [docs/specs/00-domain-model.md](../docs/specs/00-domain-model.md)
+> 코딩 컨벤션: [dev/coding-convention.md](../dev/coding-convention.md)
 > 이 문서는 자기완결적이다. 다른 phase 파일이나 PLAN.md를 참조하지 않고 이 문서만으로 작업한다.
 > 전제: Phase 0 에서 구성한 `Model/` 디렉터리와 GoogleTest/GoogleMock 테스트 프로젝트가 이미 존재한다.
 
