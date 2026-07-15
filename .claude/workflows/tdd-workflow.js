@@ -31,20 +31,31 @@ const REFACTOR_VERDICT_SCHEMA = {
 
 const VALID_STEPS = ['plan', 'red', 'green', 'refactor']
 
-if (!args || !VALID_STEPS.includes(args.step)) {
-  throw new Error(`args.step 은 다음 중 하나여야 한다: ${VALID_STEPS.join(', ')}`)
+// 호출부가 args 를 JSON 문자열로 감싸서 전달하는 경우를 방어적으로 처리한다
+// (객체를 기대하지만 문자열로 직렬화되어 넘어오는 호출 경로가 있었음).
+let parsedArgs = args
+if (typeof parsedArgs === 'string') {
+  try {
+    parsedArgs = JSON.parse(parsedArgs)
+  } catch {
+    parsedArgs = null
+  }
 }
 
-if (args.step === 'plan') {
-  if (!args.requirements) {
-    throw new Error('args.step === "plan" 이면 args.requirements (string) 가 필요하다 — 예: docs/specs 요구사항 파일 내용')
+if (!parsedArgs || !VALID_STEPS.includes(parsedArgs.step)) {
+  throw new Error(`parsedArgs.step 은 다음 중 하나여야 한다: ${VALID_STEPS.join(', ')} (전달받은 args: ${JSON.stringify(args)})`)
+}
+
+if (parsedArgs.step === 'plan') {
+  if (!parsedArgs.requirements) {
+    throw new Error('parsedArgs.step === "plan" 이면 parsedArgs.requirements (string) 가 필요하다 — 예: docs/specs 요구사항 파일 내용')
   }
 
   phase('Plan')
   const plan = await agent(
     `다음 요구사항을 구현해야 한다:
 
-${args.requirements}
+${parsedArgs.requirements}
 
 이 요구사항을 phase 단위로 쪼개 PLAN.md와 phase{N}.md 파일들을 작성하라.`,
     { schema: PLAN_SCHEMA, label: 'plan', agentType: 'tdd-planner' }
@@ -55,13 +66,13 @@ ${args.requirements}
   return plan
 }
 
-if (!args.phaseNumber) {
-  throw new Error(`args.step === "${args.step}" 이면 args.phaseNumber (number) 가 필요하다`)
+if (!parsedArgs.phaseNumber) {
+  throw new Error(`parsedArgs.step === "${parsedArgs.step}" 이면 parsedArgs.phaseNumber (number) 가 필요하다`)
 }
-const n = args.phaseNumber
-const round = args.round || 1
+const n = parsedArgs.phaseNumber
+const round = parsedArgs.round || 1
 
-if (args.step === 'red') {
+if (parsedArgs.step === 'red') {
   phase('RED')
   await agent(
     `phase${n}.md 의 요구사항에 대해 RED 단계를 수행하라 (라운드 ${round}).`,
@@ -71,7 +82,7 @@ if (args.step === 'red') {
   return { phaseNumber: n, round, step: 'red', done: true }
 }
 
-if (args.step === 'green') {
+if (parsedArgs.step === 'green') {
   phase('GREEN')
   await agent(
     `phase${n}.md 의 요구사항에 대해 GREEN 단계를 수행하라 (라운드 ${round}).`,
@@ -81,7 +92,7 @@ if (args.step === 'green') {
   return { phaseNumber: n, round, step: 'green', done: true }
 }
 
-// args.step === 'refactor'
+// parsedArgs.step === 'refactor'
 phase('REFACTOR')
 const verdict = await agent(
   `phase${n}.md 의 요구사항에 대해 REFACTOR 단계를 수행하라 (라운드 ${round}).`,
