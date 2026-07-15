@@ -7,7 +7,7 @@
 
 ## 목표
 
-승인/거절 유스케이스와 재고 판정 분기 로직을 완성한다. **이 phase 에서 재고 차감 시점 정책(A/B)을 최종 확정**한다 — 기본 채택안은 **정책 A: 승인 시 차감**이다 (재고 충분 판정 시 즉시 `stockQuantity -= quantity` 수행, 출고 시에는 상태 전환만 수행). 정책 A를 채택한 경우 Phase 7(출고 처리)의 재고 차감 단계는 생략한다.
+승인/거절 유스케이스와 재고 판정 분기 로직을 완성한다. 재고 차감 시점 정책은 **정책 B: 출고 시 차감**으로 확정되어 있다 (승인 시에는 상태 전환만 수행하고, 실제 `stockQuantity -= quantity` 는 Phase 7 출고 실행 시점에 수행한다). 이 phase 에서는 승인 로직이 재고를 차감하지 않고 상태 전환만 수행하도록 구현한다.
 
 ## 구현 항목
 
@@ -24,7 +24,7 @@
 **처리 흐름**
 1. 대상 주문이 존재하며 `RESERVED` 상태인지 확인. 아니면 "승인 가능한 주문이 아닙니다" 안내, 처리 거부.
 2. 대상 `Sample` 의 `stockQuantity` 조회.
-3. **재고 충분** (`stockQuantity >= quantity`): 정책 A에 따라 `stockQuantity -= quantity` 즉시 차감하고 주문 상태를 `CONFIRMED` 로 전환.
+3. **재고 충분** (`stockQuantity >= quantity`): 주문 상태를 `CONFIRMED` 로 전환한다. 정책 B에 따라 재고 차감은 하지 않는다 (실제 차감은 Phase 7 출고 시점에 수행).
 4. **재고 부족** (`stockQuantity < quantity`): 아래 "생산 라인 자동 등록" 절차 수행 후 주문 상태를 `PRODUCING` 으로 전환.
 5. 처리 결과 메시지 출력 (전환된 상태 포함).
 
@@ -51,24 +51,18 @@
 
 - 이미 `RESERVED` 가 아닌 주문(즉 `REJECTED`/`CONFIRMED`/`PRODUCING`/`RELEASE`)에 대한 승인/거절 재시도는 거부하고 안내 메시지를 출력한다.
 
-## 문서 동기화 작업
-
-이 phase 완료 시 다음 문서를 정책 A 확정 결과와 일치하도록 갱신한다:
-- `docs/specs/04-order-approval.md`: "주의(재고 일부 활용 여부)" 절의 잠정 문구를 확정 정책으로 갱신.
-- `docs/specs/07-shipment.md`: "재고 차감 시점 정책" 절에서 정책 A 채택을 확정하고, "출고 실행" 흐름에서 재고 차감 단계를 생략함을 명시.
-
 ## 테스트 관점 (RED 단계에서 작성할 대상)
 
 GoogleMock 으로 `SampleRepository`/`OrderRepository` 를 목 처리하여 승인/거절 로직을 격리 테스트한다.
 
-- 재고 충분 분기: `stockQuantity >= quantity` 인 경우 재고가 `quantity` 만큼 차감되고 주문이 `CONFIRMED` 로 전환됨을 확인.
-- 재고 부족 분기: `stockQuantity < quantity` 인 경우 `ProductionJob` 이 생성되어 큐에 추가되고 주문이 `PRODUCING` 으로 전환됨을 확인. 이때 재고는 차감되지 않음을 확인.
+- 재고 충분 분기: `stockQuantity >= quantity` 인 경우 주문이 `CONFIRMED` 로 전환됨을 확인. 재고 차감 메서드는 호출되지 않음을 확인 (`EXPECT_CALL(...).Times(0)` 등으로 검증).
+- 재고 부족 분기: `stockQuantity < quantity` 인 경우 `ProductionJob` 이 생성되어 큐에 추가되고 주문이 `PRODUCING` 으로 전환됨을 확인. 이때도 재고는 차감되지 않음을 확인.
 - `ceil` 계산 경계값: `shortageQuantity`/`yield` 가 나누어 떨어지는 경우와 떨어지지 않는 경우 각각의 `actualProductionQuantity` 값 확인 (예: `shortageQuantity=10, yield=0.9` → `ceil(11.11)=12`).
 - 이미 처리된 주문(`REJECTED`/`CONFIRMED`/`PRODUCING`/`RELEASE`)에 대한 승인/거절 재시도가 거부됨을 확인.
 - 거절 처리 시 상태가 `REJECTED` 로 전환되고 재고/큐에 영향이 없음을 확인.
 
 ## 완료 기준 (Definition of Done)
 
-- [ ] 재고 충분/부족 분기 테스트가 모두 통과한다.
-- [ ] 재고 차감 정책(정책 A)이 문서(`docs/specs/04-order-approval.md`, `docs/specs/07-shipment.md`)와 코드에서 일치한다.
+- [ ] 재고 충분/부족 분기 테스트가 모두 통과한다 (충분 분기에서도 재고가 차감되지 않고 상태만 전환됨을 포함).
+- [ ] 재고 차감 정책(정책 B: 출고 시 차감)이 `docs/specs/04-order-approval.md`, `docs/specs/07-shipment.md` 와 코드에서 일치한다.
 - [ ] 잘못된 상태의 주문에 대한 승인/거절 시도가 거부됨을 테스트로 확인한다.

@@ -26,10 +26,10 @@
 | 상태 | 조건 |
 |---|---|
 | 고갈 | `stockQuantity == 0` |
-| 부족 | `stockQuantity > 0` 이고, 해당 시료의 `RESERVED`+`PRODUCING` 상태 주문의 `quantity` 합보다 `stockQuantity` 가 적음 |
+| 부족 | `stockQuantity > 0` 이고, 해당 시료의 `RESERVED`+`PRODUCING`+`CONFIRMED` 상태 주문의 `quantity` 합보다 `stockQuantity` 가 적음 |
 | 여유 | 그 외 (재고가 대기 주문 수량 합 이상, 대기 주문이 없는 경우 포함) |
 
-> `CONFIRMED` 는 Phase 4에서 확정한 정책 A(승인 시 재고 차감)에 따라 이미 재고가 차감된 상태이므로, 대기 수량 합 계산에서 제외한다.
+> 재고 차감 시점 정책은 **정책 B(출고 시 차감)** 로 확정되었다. 따라서 `CONFIRMED` 상태도 아직 재고가 차감되지 않았으므로(출고 시점에 차감), 대기 수량 합 계산에 포함한다 (`RELEASE`/`REJECTED` 는 제외).
 
 ### 2. `MonitoringView`
 

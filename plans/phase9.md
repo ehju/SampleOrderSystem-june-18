@@ -30,13 +30,13 @@ Phase 8의 전체 시나리오를 자동화된 테스트로 전환 가능한 범
 | 주문 승인/거절 | [docs/specs/04-order-approval.md](../docs/specs/04-order-approval.md) | 재고 충분/부족 분기, ceil 경계값, 이미 처리된 주문 재처리 |
 | 생산 라인 | [docs/specs/05-production-line.md](../docs/specs/05-production-line.md) | FIFO 순서, 빈 큐 완료 처리 시도 |
 | 모니터링 | [docs/specs/06-monitoring.md](../docs/specs/06-monitoring.md) | 재고==대기수량 경계, 재고==0/대기수량==0 |
-| 출고 처리 | [docs/specs/07-shipment.md](../docs/specs/07-shipment.md) | CONFIRMED 아닌 주문 출고 시도, 재출고 시도 |
+| 출고 처리 | [docs/specs/07-shipment.md](../docs/specs/07-shipment.md) | CONFIRMED 아닌 주문 출고 시도, 재출고 시도, 재고 부족한 CONFIRMED 주문 출고 거부 |
 | 메인 메뉴 | [docs/specs/01-main-menu.md](../docs/specs/01-main-menu.md) | 숫자 외 입력, 범위 밖 메뉴, 초기 상태(시료 0건) |
 
 ### 3. 정책 문서 최종 검토
 
 구현 중 확정된 다음 정책이 `docs/specs/` 문서와 일치하는지 확인하고, 불일치가 있으면 문서를 갱신한다.
-- 재고 차감 시점: 정책 A (승인 시 차감) — `docs/specs/04-order-approval.md`, `docs/specs/07-shipment.md`
+- 재고 차감 시점: 정책 B (출고 시 차감) — `docs/specs/04-order-approval.md`, `docs/specs/07-shipment.md`
 - 생산 완료 트리거 방식: 수동 트리거 — `docs/specs/05-production-line.md`
 - sampleId 자동 채번 여부 — `docs/specs/02-sample-management.md`
 - 재고 부족 시 기존 재고 활용 및 동시성 정책 — `docs/specs/04-order-approval.md`

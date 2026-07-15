@@ -87,28 +87,28 @@
 
 ## Phase 4 — 주문 승인/거절 기능 (재고 판정 & 정책 확정)
 
-**참조 명세**: [specs/04-order-approval.md](specs/04-order-approval.md), [specs/07-shipment.md](specs/07-shipment.md) 3절(재고 차감 시점)
+**참조 명세**: [specs/04-order-approval.md](specs/04-order-approval.md), [specs/07-shipment.md](specs/07-shipment.md) 2.3절(재고 차감 시점)
 
-**목표**: 승인/거절 유스케이스와 재고 판정 분기 로직 완성. **재고 차감 시점 정책(A/B)을 이 Phase 에서 최종 확정**하고 관련 명세 문서를 갱신한다.
+**목표**: 승인/거절 유스케이스와 재고 판정 분기 로직 완성. **재고 차감 시점 정책은 B안(출고 시 차감)으로 확정**되어 있으며, 이 Phase 에서는 그에 따라 승인 시 상태 전환만 수행하도록 구현한다.
 
 - 접수된 주문(`RESERVED`) 목록 조회 기능 (FIFO 정렬)
 - 주문 승인 로직
-  - 재고 충분 → `CONFIRMED` 전환 (+ 정책 A 채택 시 재고 즉시 차감)
+  - 재고 충분 → `CONFIRMED` 전환 (재고 차감은 하지 않음 — 정책 B에 따라 출고 시점에 차감)
   - 재고 부족 → `shortageQuantity`, `actualProductionQuantity`, `totalProductionTime` 계산 후 `ProductionJob` 생성, `PRODUCING` 전환
 - 주문 거절 로직 → `REJECTED` 전환
 - 상태 가드: 이미 `RESERVED` 가 아닌 주문에 대한 재처리 방지
-- 단위 테스트: 재고 충분/부족 각각의 분기, 이미 처리된 주문 재처리 거부, `ceil` 계산 경계값(나누어 떨어지는 경우/안 떨어지는 경우)
+- 단위 테스트: 재고 충분/부족 각각의 분기(충분 분기에서 재고가 차감되지 않음을 확인), 이미 처리된 주문 재처리 거부, `ceil` 계산 경계값(나누어 떨어지는 경우/안 떨어지는 경우)
 
 **완료 기준**
-- [ ] 재고 충분/부족 분기 테스트 모두 통과
-- [ ] 재고 차감 정책이 문서와 코드에서 일치
+- [ ] 재고 충분/부족 분기 테스트 모두 통과 (충분 분기는 상태만 `CONFIRMED` 로 전환되고 재고는 그대로임을 확인)
+- [ ] 재고 차감 정책(정책 B)이 문서와 코드에서 일치
 - [ ] 잘못된 상태의 주문에 대한 승인/거절 시도가 거부됨을 테스트로 확인
 
 ---
 
 ## Phase 5~7 — 병렬 진행 트랙 (Phase 4 완료 후 동시 착수)
 
-**전제 조건**: Phase 4의 완료 기준(재고 차감 정책 A/B 확정, 재고 충분/부족 분기, `CONFIRMED`/`PRODUCING` 전환)이 모두 충족되어야 이 트랙에 착수할 수 있다.
+**전제 조건**: Phase 4의 완료 기준(재고 차감 정책 B안 적용, 재고 충분/부족 분기, `CONFIRMED`/`PRODUCING` 전환)이 모두 충족되어야 이 트랙에 착수할 수 있다.
 
 아래 세 Phase는 서로 다른 파일(`ProductionQueue`/`MonitoringService`/출고 Controller)을 다루고, 모두 Phase 4까지의 Repository·상태 전환 로직을 **읽기 전용으로 소비**할 뿐 서로를 필요로 하지 않는다. 따라서 담당자·서브에이전트를 나누어 **동시에 구현**한다.
 
@@ -141,7 +141,7 @@
 **목표**: 상태별 주문 집계 및 재고 상태(여유/부족/고갈) 판정 기능 완성
 
 - `MonitoringService` (또는 Controller 내 로직): 상태별 주문 카운트 계산 (`REJECTED` 제외)
-- 재고 상태 판정 로직: 시료별 `stockQuantity` vs 대기 주문(`RESERVED`+`PRODUCING`) 수량 합 비교 → 여유/부족/고갈
+- 재고 상태 판정 로직: 시료별 `stockQuantity` vs 대기 주문(`RESERVED`+`PRODUCING`+`CONFIRMED`, 재고 차감 정책 B에 따라 `CONFIRMED`도 미차감 상태) 수량 합 비교 → 여유/부족/고갈
 - `MonitoringView` 구현: 주문 현황, 재고 현황 출력
 - 단위 테스트: 경계값(재고==대기수량, 재고==0인데 대기수량도 0인 경우 등), 상태별 카운트는 Repository에 직접 주문/시료 데이터를 세팅해 검증 (Phase 5/7의 화면·로직 완성 여부와 무관)
 
@@ -154,15 +154,15 @@
 
 **참조 명세**: [specs/07-shipment.md](specs/07-shipment.md)
 
-**목표**: `CONFIRMED` 주문의 출고 실행 및 `RELEASE` 전환
+**목표**: `CONFIRMED` 주문의 출고 실행(정책 B에 따라 이 시점에 재고 차감) 및 `RELEASE` 전환
 
 - 출고 대상(`CONFIRMED`) 목록 조회
-- 출고 실행 로직: 상태 가드 → (정책 B 채택 시에만 재고 차감) → `RELEASE` 전환
-- 단위 테스트: `CONFIRMED` 가 아닌 주문 출고 거부, 정상 출고 후 상태/재고 정합성
+- 출고 실행 로직: 상태 가드 → 재고 확인 후 차감(재고 부족 시 거부, `CONFIRMED` 유지) → `RELEASE` 전환
+- 단위 테스트: `CONFIRMED` 가 아닌 주문 출고 거부, 재고 부족 시 출고 거부, 정상 출고 후 상태/재고 정합성
 
 **완료 기준** (자체 단위 테스트로 검증, 타 병렬 Phase 산출물 불필요)
-- [ ] 정상 출고 시 `RELEASE` 전환 및 (정책 B인 경우) 재고 차감이 단위 테스트로 확인됨
-- [ ] 잘못된 상태의 주문에 대한 출고 시도가 거부됨을 확인
+- [ ] 정상 출고 시 재고 차감과 `RELEASE` 전환이 단위 테스트로 확인됨
+- [ ] 잘못된 상태의 주문 및 재고 부족 상태의 `CONFIRMED` 주문에 대한 출고 시도가 거부됨을 확인
 - [ ] 출고 후 모니터링 화면에 `RELEASE` 카운트가 반영되는지는 Phase 8 통합 시나리오에서 최종 검증한다
 
 ---
@@ -221,12 +221,14 @@ Phase 0 (기초 설정)
 
 Phase 5/6/7은 Phase 4 완료 시점에 동시 착수 가능하다 (담당자 또는 서브에이전트를 나누어 병렬 구현). 세 Phase 간 교차 시나리오 검증은 Phase 8에서 수행한다.
 
-## 미확정 정책 목록 (구현 중 확정 필요)
+## 확정된 정책 목록
 
-| 항목 | 관련 Phase | 관련 명세 |
-|---|---|---|
-| 재고 차감 시점 (승인 시 vs 출고 시) | Phase 4 | [specs/04-order-approval.md](specs/04-order-approval.md), [specs/07-shipment.md](specs/07-shipment.md) |
-| 생산 완료 트리거 방식 (수동/모의/실시간) | Phase 5 | [specs/05-production-line.md](specs/05-production-line.md) |
-| sampleId 자동 채번 여부 | Phase 2 | [specs/02-sample-management.md](specs/02-sample-management.md) |
-| 재고 부족 시 기존 재고 활용 및 동시성(이중 배정 방지) 정책 | Phase 4 | [specs/04-order-approval.md](specs/04-order-approval.md) |
-| JSON 파일 저장 경로/스키마, 저장 시점(변경 즉시 vs 종료 시) | Phase 2 | PRD 4절 (자료구조는 Json 사용, 파일 영속화로 확정) |
+| 항목 | 관련 Phase | 확정안 | 관련 명세 |
+|---|---|---|---|
+| 재고 차감 시점 (승인 시 vs 출고 시) | Phase 4, 7 | **B안: 출고 시 차감**. 승인 시 상태 전환만 수행, 출고 실행 시점에 재고 재확인 후 차감 (재고 부족 시 출고 거부, `CONFIRMED` 유지) | [specs/04-order-approval.md](specs/04-order-approval.md), [specs/07-shipment.md](specs/07-shipment.md) |
+| 생산 완료 트리거 방식 (수동/모의/실시간) | Phase 5 | 수동 트리거 ("생산 완료 처리" 명령) | [specs/05-production-line.md](specs/05-production-line.md) |
+| sampleId 자동 채번 여부 | Phase 2 | 자동 채번 | [specs/02-sample-management.md](specs/02-sample-management.md) |
+| 재고 부족 시 기존 재고 활용 및 동시성(이중 배정 방지) 정책 | Phase 4 | 부족분만 생산. 단일 사용자 순차 처리 콘솔 앱이므로 별도 예약/잠금 로직 미도입 | [specs/04-order-approval.md](specs/04-order-approval.md) |
+| JSON 파일 저장 경로/스키마, 저장 시점(변경 즉시 vs 종료 시) | Phase 2 | 변경 즉시 저장. 파일 경로/스키마 세부사항은 Phase 2에서 확정 | PRD 4절 (자료구조는 Json 사용, 파일 영속화로 확정) |
+
+> 재고 차감 시점이 B안으로 확정됨에 따라, Phase 6(모니터링)의 재고 상태 판정 기준에도 `CONFIRMED` 상태가 포함되도록 반영되어 있다 (`RESERVED`+`PRODUCING`+`CONFIRMED` 합계 기준).

@@ -36,10 +36,10 @@
 | 상태 | 조건 |
 |---|---|
 | 고갈 | `stockQuantity == 0` |
-| 부족 | `stockQuantity > 0` 이고, 해당 시료의 미출고 대기 주문 수량 합(`RESERVED` + `PRODUCING` 상태 주문의 `quantity` 합) 보다 `stockQuantity` 가 적음 |
+| 부족 | `stockQuantity > 0` 이고, 해당 시료의 미출고 대기 주문 수량 합(`RESERVED` + `PRODUCING` + `CONFIRMED` 상태 주문의 `quantity` 합) 보다 `stockQuantity` 가 적음 |
 | 여유 | 그 외 (재고가 대기 주문 수량 합 이상, 대기 주문이 없는 경우 포함) |
 
-> **비고**: "주문 대비"의 기준을 어떤 상태의 주문으로 볼지는 PRD에 정확히 명시되어 있지 않다. 본 명세에서는 아직 출고되지 않고 재고 소요가 예정된 상태(`RESERVED`, `PRODUCING`)의 수량 합을 기준으로 제안한다. `CONFIRMED` 는 이미 재고가 차감(또는 확보)된 상태로 간주하여 기준에서 제외한다. 구현 시 이 정책을 재확인하고 확정한다.
+> **비고 (확정)**: 재고 차감 시점 정책은 **B안(출고 시 차감)** 으로 확정되었다([07-shipment.md](07-shipment.md) 참조). 즉 `CONFIRMED` 상태에서도 재고는 아직 차감되지 않고 `RELEASE` 로 전환되는 순간(출고 실행 시점)에 차감된다. 따라서 "주문 대비" 기준은 아직 출고되지 않은 모든 상태(`RESERVED` + `PRODUCING` + `CONFIRMED`)의 수량 합으로 계산한다 (`RELEASE`/`REJECTED` 는 제외).
 
 **표시 예시**
 
